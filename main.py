@@ -20,8 +20,8 @@ symbols_filename = r'.\sp500symbols.csv'
 window_length = 15
 
 stock_list = []
-csvfile = open(symbols_filename, newline='')
-reader = csv.reader(csvfile)
+csv_file = open(symbols_filename, newline='')
+reader = csv.reader(csv_file)
 for row in reader:
     stock_list.append(row[0])
 
@@ -245,7 +245,9 @@ if __name__ == '__main__':
         allocation = calculate_allocation(window_df)
 
         # make future_df be from the end of stock_df to 5 days after that
-        future_df = all_input_df.iloc[(window_finish - 1) * window_df_length:(window_finish - 1 + 5) * window_df_length]
+        start = (window_finish - 1) * window_df_length
+        finish = (window_finish - 1 + 5) * window_df_length
+        future_df = all_input_df.iloc[start:finish]
 
         if first_loop:
             entire_future_df = all_input_df.iloc[(window_finish - 1) * window_df_length:]
